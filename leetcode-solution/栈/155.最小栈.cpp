@@ -5,28 +5,33 @@
  */
 
 // @lc code=start
+
+// 两个栈：入栈的时候，同时把当前情况下的最小值也入栈
+// 出栈同时出栈即可
+#include <algorithm>
+#include <climits>
 #include <stack>
-using namespace std;
+
 class MinStack {
-  stack<int> x_stack;
-  stack<int> min_stack;
+  std::stack<int> s;
+  std::stack<int> min;
 
 public:
-  MinStack() { min_stack.push(INT_MAX); }
+  MinStack() { min.push(INT_MAX); }
 
   void push(int x) {
-    x_stack.push(x);
-    min_stack.push(min(min_stack.top(), x));
+    s.push(x);
+    min.push(std::min(x, min.top()));
   }
 
   void pop() {
-    x_stack.pop();
-    min_stack.pop();
+    s.pop();
+    min.pop();
   }
 
-  int top() { return x_stack.top(); }
+  int top() { return s.top(); }
 
-  int getMin() { return min_stack.top(); }
+  int getMin() { return min.top(); }
 };
 
 /**
